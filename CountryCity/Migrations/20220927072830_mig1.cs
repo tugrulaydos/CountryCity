@@ -4,7 +4,7 @@
 
 namespace CountryCity.Migrations
 {
-    public partial class FirstMig : Migration
+    public partial class mig1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

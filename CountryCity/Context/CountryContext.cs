@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CountryCity.Context
 {
-    public class Context:DbContext
+    public class CountryContext:DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -15,6 +15,5 @@ namespace CountryCity.Context
         public DbSet<City> Cities { get; set; }
 
         public DbSet<Town> Towns { get; set; }
-
     }
 }
