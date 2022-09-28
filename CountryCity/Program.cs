@@ -1,7 +1,18 @@
+using CountryCity.Context;
+using CountryCity.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<CountryContext>(x => x.UseSqlServer("ConnectionStrings:SqlServerConnectionString"));
+builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<CountryContext>();
+
 
 var app = builder.Build();
 
@@ -18,7 +29,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapRazorPages();
 
