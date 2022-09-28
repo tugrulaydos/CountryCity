@@ -7,11 +7,17 @@ namespace CountryCity.Models
         [Key]
         public int ID { get; set; }
 
-        public string CountryName { get; set; }
+        [StringLength(50)]
+        public string Name { get; set; }
 
-        public string ?Population { get; set; }
 
-        public int CityID { get; set; }             
+        public int ?Population { get; set; }
+
+        public int CityID { get; set; }
+        
+        public City CityFK { get; set; }
+
+        
 
 
     }

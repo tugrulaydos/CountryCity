@@ -7,13 +7,16 @@ namespace CountryCity.Models
         [Key]
         public int ID { get; set; }
 
-        public string CountryName { get; set; }
+        [StringLength(50)]
+        public string Name { get; set; }
 
+        [StringLength(50)]
         public string Capital { get; set; }
+       
 
-        public string ?MonetaryUnit { get; set; }
+        public int ?Population { get; set; }
 
-        public string ?Population { get; set; }
+        public ICollection<City> cities { get; set; }
 
 
 
