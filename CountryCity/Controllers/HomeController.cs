@@ -2,6 +2,7 @@
 using CountryCity.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace CountryCity.Controllers
 {
@@ -27,14 +28,14 @@ namespace CountryCity.Controllers
 
         }
 
-        public IActionResult SignUp()
+        public IActionResult SignIn()
         {
             return View();
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> SignUp(AppUserViewModel appUserViewModel)
+        public async Task<IActionResult> SignIn(AppUserViewModel appUserViewModel)
         {
 
             //Gerekli validasyon işlemleri yapıldıktan sonra
@@ -59,10 +60,19 @@ namespace CountryCity.Controllers
                 IdentityResult result = await _userManager.CreateAsync(appUser, appUserViewModel.Password);
                 //Burada manuel olarak yapılan eşleştirmeyi Automapper kütüphanesini kullanarakta otomatik bir şekilde
                 //gerçekleştirebiliriz.               
-              
+
 
                 if (result.Succeeded)
                     return RedirectToAction("Index");
+                else
+                   result.Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description));
+
+
+                
+
+                //varsayılan password validasyonlarına uygun olmayan sifreler girildigi taktirde "IdentityResult" bizlere hangi validasyonlar
+                //olduguna dair "Errors" property'si ile bilgi verecektir. Bunu da "ModelState" nesnesine yukleyerek son kullaniciya hata 
+                //mesaji olarak iletebiliriz.
 
             }
 

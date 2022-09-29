@@ -2,6 +2,7 @@ using CountryCity.Context;
 using CountryCity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,13 +19,16 @@ builder.Services.AddMvcCore();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
-    options.Password.RequireDigit = false;
-    options.Password.RequiredLength = 5;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequireUppercase = false;
+    options.Password.RequireDigit = false;    //Numeric karakterlere izin verilmedi.
+    options.Password.RequiredLength = 5;      //En az 5 karakterli olacak.
+    options.Password.RequireLowercase = true; //küçük harf zorunluluðu var.
+    options.Password.RequireUppercase = false;//büyük harf zorunluluðu yok.
+    options.Password.RequireNonAlphanumeric = false; //alphanumericolamayan karakter zorunlulugu yoktur.
+
+    //özel validasyonlarý IPasswordValidator arayuzunu kullanmamýz gerekecektir.   
 
 });
+
 
 
 var app = builder.Build();
