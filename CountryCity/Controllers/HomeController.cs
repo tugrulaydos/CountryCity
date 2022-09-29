@@ -1,8 +1,11 @@
 ﻿using CountryCity.Models;
+using CountryCity.Models.ViewModel;
 using CountryCity.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using NuGet.Configuration;
 
 namespace CountryCity.Controllers
 {
@@ -13,6 +16,7 @@ namespace CountryCity.Controllers
 
         readonly UserManager<AppUser> _userManager;
 
+        readonly SignInManager<AppUser> _signInManager;
         //Şimdi de bu yapılanmaları kullanarak kullanıcı oluşturalım ve var olan kullanıcıları yönetelim.
 
         //Bu iş için UserManager Sınıfını kullanacağız.User Manager hangi kullanıcı türünü yöneteceğini 
@@ -21,12 +25,73 @@ namespace CountryCity.Controllers
         //Bu sınıfa erişebeilmek için Asp.NEt Core identity mimarisinin kullanıldığı uygulamalarda 
         //Dependency Injection ile talepte bulunmamız yeterli olacaktır.
 
+        //Sıgn In Manager Sınıfı-->Kullanıcının giriş ve çıkışlarını kontrol eden bir sınıftır.
+            //Devamında ise kullanıcı tarafından girilen email adresinin yanlış olma 
+            //durumunda ModelState’e error olarak ilgili hata mesajları
+            //eklenmekte ve böylece kullanıcıya bilgi verilmektedir.
 
-        public HomeController(UserManager<AppUser> userManager)
+
+        public HomeController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager )
         {
             _userManager = userManager;
 
+            _signInManager = signInManager;
+            
+
         }
+
+        public IActionResult Login(string ReturnUrl)
+        {
+            TempData["ReturnUrl"] = ReturnUrl;  //hangi sayfaya girilmek isteniyorsa otamatik olarak Returnrl parametresiyle gelecektir.
+            return View();
+
+            //Burada Login Action'ın get metodunda "Return Url" parametresi alınmış ve TempDate kontrolune atanmıştır.
+            //Bunun nedeni, Identity mekanizması herhangi bir kulanıcının yetkisinin olmadığı sayfalara erişmeye 
+            //yahut yetkisi dışında bir iş yapmaya çalıştığında otomatik olarak direkt olarak Login Action'a yönlendirilecektir.
+
+            //İşte bu actionda veritabanıyla tutarlı veriler eşliğinde bir doğrulama gerçekleştirilirse eğer kullanıcıyı ilk gitmek
+            //istediği adrese yönlendirmekteyiz.
+
+            //PasswordSignInAsync metodunun 3.parametresine true verildiği taktirde oluşturulacak cookie değerinin
+            //Expiration olarak belirtilen vade kadar tutulacağını ifade etmekte aksi taktirde session açık kaldığı
+            //sürece coockie değerlerinin kullanılabileceğini lakin browser kapatıldığı vakit cookielerin temizle
+            //neceğini ifade etmektedir.. 4. parametrede ise başarısız neticelenen n adet giriş denemelerinde
+            //ilgili kullanıcının hesabının kilitlenip kilitlenmeme durumunu kontrol etmiş oluyoruz. 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    //İlgili kullanıcıya dair önceden oluşturulmuş bir Cookie varsa siliyoruz.
+                    await _signInManager.SignOutAsync();
+                    Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(user, model.Password, model.Persistent, model.Lock);
+                    //3. parametresine true verildiği taktirde oluşturulacak cookie değerinin 
+
+                    if (result.Succeeded)
+                        return Redirect(TempData["returnUrl"].ToString());
+                }
+                else
+                {
+                    ModelState.AddModelError("NotUser", "Böyle bir kullanıcı bulunmamaktadır."); 
+                    ModelState.AddModelError("NotUser2", "E-posta veya şifre yanlış.");
+                }
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index");
+        }
+
+
+
 
         public IActionResult SignIn()
         {
@@ -68,12 +133,7 @@ namespace CountryCity.Controllers
                    result.Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description)); //-->tüm hatlar modelstate nesnesine eklenmiştir.
                    //IdentityResult nesnesinde gelen Errors proporty'sindeki tüm hatalar. 
                    //ModelState nesnesine AddModelError metoduyla eklenmiştir.
-                   //kullanıcı girmiş olduğu tüm hatalı şifreler yüzenden bilgilendirilecektir.
-
-
-
-
-                
+                   //kullanıcı girmiş olduğu tüm hatalı şifreler yüzenden bilgilendirilecektir.                
 
                 //varsayılan password validasyonlarına uygun olmayan sifreler girildigi taktirde "IdentityResult" bizlere hangi validasyonlar
                 //olduguna dair "Errors" property'si ile bilgi verecektir. Bunu da "ModelState" nesnesine yukleyerek son kullaniciya hata 
@@ -84,7 +144,13 @@ namespace CountryCity.Controllers
             return View();
         }
 
+        //Cookie bazlı kimlik doğrulamasını tam olarak inşa ettikten sonra sayfa bazlı yetki kontrolu gerceklestirmemiz yeterli ve yerinde olacaktır.
+        //Bunun için Authorize attributeunun kullanılması yeterlidir.Burada örneklendirme için 
+        //“Index” actionını seçiyorum ve aşağıda olduğu gibi Authorize attributeu ile işaretliyorum.
 
+
+
+        [Authorize]
         public IActionResult Index()
         {
             return View(_userManager.Users);

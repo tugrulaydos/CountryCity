@@ -44,6 +44,24 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 });
 
+builder.Services.ConfigureApplicationCookie(_ =>
+{
+    _.LoginPath = new PathString("/Home/Login");
+    _.Cookie = new CookieBuilder
+    {
+        Name = "AspNetCoreIdentityExampleCookie", //Oluþturulacak Cookie'yi isimlendiriyoruz.
+        HttpOnly = false, //Kötü niyetli insanlarýn client-side tarafýndan Cookie'ye eriþmesini engelliyoruz.
+        /*  Expiration = TimeSpan.FromMinutes(120),*/  //Oluþturulacak Cookie'nin vadesini belirliyoruz.
+        MaxAge = TimeSpan.FromMinutes(120),
+        SameSite = SameSiteMode.Lax, //Top level navigasyonlara sebep olmayan requestlere Cookie'nin gönderilmemesini belirtiyoruz.
+        SecurePolicy = CookieSecurePolicy.Always //HTTPS üzerinden eriþilebilir yapýyoruz.
+    };
+    _.SlidingExpiration = true; //Expiration süresinin yarýsý kadar süre zarfýnda istekte bulunulursa eðer geri kalan yarýsýný tekrar sýfýrlayarak ilk ayarlanan süreyi tazeleyecektir.
+    _.ExpireTimeSpan = TimeSpan.FromMinutes(2);//CookieBuilder nesnesinde tanýmlanan Expiration deðerinin varsayýlan deðerlerle ezilme ihtimaline karþýn tekrardan Cookie vadesi burada da belirtiliyor.
+});
+
+//Bu þekilde kullanýlacak olan Cookie yapýlanmasýnýn temel konfigurasyon ayarlarý saðlanmýþ oluyor.
+
 
 var app = builder.Build();
 
