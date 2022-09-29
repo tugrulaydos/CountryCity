@@ -8,9 +8,7 @@ namespace CountryCity.Models
         public int ID { get; set; }
 
         [StringLength(50)]
-        public string Name { get; set; }
-
-
+        public string Name { get; set; }        
         public int ?Population { get; set; }
 
         [StringLength(50)]

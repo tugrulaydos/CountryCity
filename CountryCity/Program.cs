@@ -7,11 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
+builder.Services.AddControllersWithViews();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<CountryContext>(x => x.UseSqlServer("ConnectionStrings:SqlServerConnectionString"));
-builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<CountryContext>();
+builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<CountryContext>();
+builder.Services.AddMvcCore();
 
 
 var app = builder.Build();
@@ -34,5 +37,10 @@ app.UseAuthorization();
 
 
 app.MapRazorPages();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();
