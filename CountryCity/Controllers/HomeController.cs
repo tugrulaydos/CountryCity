@@ -25,7 +25,7 @@ namespace CountryCity.Controllers
         //Bu sınıfa erişebeilmek için Asp.NEt Core identity mimarisinin kullanıldığı uygulamalarda 
         //Dependency Injection ile talepte bulunmamız yeterli olacaktır.
 
-        //Sıgn In Manager Sınıfı-->Kullanıcının giriş ve çıkışlarını kontrol eden bir sınıftır.
+            //Sıgn In Manager Sınıfı-->Kullanıcının giriş ve çıkışlarını kontrol eden bir sınıftır.
             //Devamında ise kullanıcı tarafından girilen email adresinin yanlış olma 
             //durumunda ModelState’e error olarak ilgili hata mesajları
             //eklenmekte ve böylece kullanıcıya bilgi verilmektedir.
@@ -52,11 +52,7 @@ namespace CountryCity.Controllers
             //İşte bu actionda veritabanıyla tutarlı veriler eşliğinde bir doğrulama gerçekleştirilirse eğer kullanıcıyı ilk gitmek
             //istediği adrese yönlendirmekteyiz.
 
-            //PasswordSignInAsync metodunun 3.parametresine true verildiği taktirde oluşturulacak cookie değerinin
-            //Expiration olarak belirtilen vade kadar tutulacağını ifade etmekte aksi taktirde session açık kaldığı
-            //sürece coockie değerlerinin kullanılabileceğini lakin browser kapatıldığı vakit cookielerin temizle
-            //neceğini ifade etmektedir.. 4. parametrede ise başarısız neticelenen n adet giriş denemelerinde
-            //ilgili kullanıcının hesabının kilitlenip kilitlenmeme durumunu kontrol etmiş oluyoruz. 
+            
         }
 
         [HttpPost]
@@ -64,16 +60,23 @@ namespace CountryCity.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 AppUser user = await _userManager.FindByEmailAsync(model.Email);
                 if (user != null)
                 {
                     //İlgili kullanıcıya dair önceden oluşturulmuş bir Cookie varsa siliyoruz.
                     await _signInManager.SignOutAsync();
                     Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(user, model.Password, model.Persistent, model.Lock);
-                    //3. parametresine true verildiği taktirde oluşturulacak cookie değerinin 
+                    //PasswordSignInAsync metodunun 3.parametresine true verildiği taktirde oluşturulacak cookie değerinin
+                    //Expiration olarak belirtilen vade kadar tutulacağını ifade etmekte aksi taktirde session açık kaldığı
+                    //sürece coockie değerlerinin kullanılabileceğini lakin browser kapatıldığı vakit cookielerin temizle
+                    //neceğini ifade etmektedir.. 4. parametrede ise başarısız neticelenen n adet giriş denemelerinde
+                    //ilgili kullanıcının hesabının kilitlenip kilitlenmeme durumunu kontrol etmiş oluyoruz. 
 
                     if (result.Succeeded)
                         return Redirect(TempData["returnUrl"].ToString());
+
+
                 }
                 else
                 {
@@ -146,7 +149,7 @@ namespace CountryCity.Controllers
 
         //Cookie bazlı kimlik doğrulamasını tam olarak inşa ettikten sonra sayfa bazlı yetki kontrolu gerceklestirmemiz yeterli ve yerinde olacaktır.
         //Bunun için Authorize attributeunun kullanılması yeterlidir.Burada örneklendirme için 
-        //“Index” actionını seçiyorum ve aşağıda olduğu gibi Authorize attributeu ile işaretliyorum.
+        //“Index” actionını seçiyorum ve aşağıda olduğu gibi Authorize attribute ile işaretliyorum.
 
 
 

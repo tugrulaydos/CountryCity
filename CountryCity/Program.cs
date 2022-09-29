@@ -12,9 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllersWithViews();
-
 // Add services to the container.
 builder.Services.AddRazorPages();
+
 
 builder.Services.AddDbContext<CountryContext>(x => x.UseSqlServer("ConnectionStrings:SqlServerConnectionString"));
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<CountryContext>();
@@ -53,8 +53,25 @@ builder.Services.ConfigureApplicationCookie(_ =>
         HttpOnly = false, //Kötü niyetli insanlarýn client-side tarafýndan Cookie'ye eriþmesini engelliyoruz.
         /*  Expiration = TimeSpan.FromMinutes(120),*/  //Oluþturulacak Cookie'nin vadesini belirliyoruz.
         MaxAge = TimeSpan.FromMinutes(120),
+
         SameSite = SameSiteMode.Lax, //Top level navigasyonlara sebep olmayan requestlere Cookie'nin gönderilmemesini belirtiyoruz.
+        //Uygulamamýza ait Cookie bilgilerinin 3. taraflardan kaynaklanan isteklere gönderilip gönderilmemesi
+        //ayarýný yaptýðýmýz bir özelliktir. "None","Strict" ve "Lax" o.ü. üç farklý deðer alýr.
+
+        //None->Cookie bilgilerini 3.taraf isteðe ekler ve gönderiri.
+        //Strict--> Uygulamaya ait Cookie bilgilerini 3.taraf hiçbir isteðe göndermez.
+        //Lax--> Uygulamaya ait Cookie bilgilerini üst düzey(top-level) navigasyonlara
+        //sebep olmayan yani bir baþka deyiþle adres çubuðundaki deðiþikliklere neden olmayan isteklere
+        //göndermeyecektir.
+
         SecurePolicy = CookieSecurePolicy.Always //HTTPS üzerinden eriþilebilir yapýyoruz.
+        //SecurePolicy, uygulamamýza ait Cokie bilgilerinin güvenilir(HTTPS) ya da güvensiz(HTTP)
+        //üzerinden eriþilebilir olup olmamasýný ayarladýðýmýz özelliktir.
+        //Always--> Cookie'leri HTTPS üzerinden eriþebilir yapar.
+        //SameAsRequest-->Cookie'leri hem HTTP hemde HTTPS protokolu üzerinden eriþilebilir
+        //yapar.
+        //NONE--> Cookie'leri HTTP üzerinden eriþilebilir yapar.
+
     };
     _.SlidingExpiration = true; //Expiration süresinin yarýsý kadar süre zarfýnda istekte bulunulursa eðer geri kalan yarýsýný tekrar sýfýrlayarak ilk ayarlanan süreyi tazeleyecektir.
     _.ExpireTimeSpan = TimeSpan.FromMinutes(2);//CookieBuilder nesnesinde tanýmlanan Expiration deðerinin varsayýlan deðerlerle ezilme ihtimaline karþýn tekrardan Cookie vadesi burada da belirtiliyor.
@@ -77,11 +94,13 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 
