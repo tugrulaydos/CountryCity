@@ -18,7 +18,10 @@ namespace CountryCity.ViewModel
         public string Email { get; set; }
 
         [Required(ErrorMessage ="Lütfen şifreyi boş geçmeyiniz...")]
-        [DataType(DataType.Password,ErrorMessage = "Lütfen şifreyi tüm kuralları göze alarak giriniz...")]
+
+        [DataType(DataType.Password, ErrorMessage = "Lütfen şifreyi tüm kuralları göz önüne alarak giriniz...")]
+
+        [Display(Name ="Password")]       
         public string Password { get; set; }
 
 

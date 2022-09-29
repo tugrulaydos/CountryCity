@@ -27,14 +27,14 @@ namespace CountryCity.Controllers
 
         }
 
-        public IActionResult SignIn()
+        public IActionResult SignUp()
         {
             return View();
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(AppUserViewModel appUserViewModel)
+        public async Task<IActionResult> SignUp(AppUserViewModel appUserViewModel)
         {
 
             //Gerekli validasyon işlemleri yapıldıktan sonra
@@ -58,8 +58,7 @@ namespace CountryCity.Controllers
 
                 IdentityResult result = await _userManager.CreateAsync(appUser, appUserViewModel.Password);
                 //Burada manuel olarak yapılan eşleştirmeyi Automapper kütüphanesini kullanarakta otomatik bir şekilde
-                //gerçekleştirebiliriz.
-               
+                //gerçekleştirebiliriz.               
               
 
                 if (result.Succeeded)
@@ -71,14 +70,10 @@ namespace CountryCity.Controllers
         }
 
 
-
         public IActionResult Index()
         {
             return View(_userManager.Users);
-        }
-
-       
-
+        }  
 
 
 
