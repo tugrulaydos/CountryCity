@@ -1,8 +1,11 @@
 using CountryCity.Context;
+using CountryCity.CustomValidations;
 using CountryCity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,8 +33,10 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 
-
 var app = builder.Build();
+
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
