@@ -65,7 +65,12 @@ namespace CountryCity.Controllers
                 if (result.Succeeded)
                     return RedirectToAction("Index");
                 else
-                   result.Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description));
+                   result.Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description)); //-->tüm hatlar modelstate nesnesine eklenmiştir.
+                   //IdentityResult nesnesinde gelen Errors proporty'sindeki tüm hatalar. 
+                   //ModelState nesnesine AddModelError metoduyla eklenmiştir.
+                   //kullanıcı girmiş olduğu tüm hatalı şifreler yüzenden bilgilendirilecektir.
+
+
 
 
                 

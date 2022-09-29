@@ -20,6 +20,16 @@ builder.Services.AddDbContext<CountryContext>(x => x.UseSqlServer("ConnectionStr
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<CountryContext>();
 builder.Services.AddMvcCore();
 
+//builder.Services.AddIdentity<AppUser, AppRole>(_ =>
+//{
+//    _.Password.RequiredLength = 5; //En az kaç karakterli olmasý gerektiðini belirtiyoruz.
+//    _.Password.RequireNonAlphanumeric = false; //Alfanumerik zorunluluðunu kaldýrýyoruz.
+//    _.Password.RequireLowercase = false; //Küçük harf zorunluluðunu kaldýrýyoruz.
+//    _.Password.RequireUppercase = false; //Büyük harf zorunluluðunu kaldýrýyoruz.
+//    _.Password.RequireDigit = false; //0-9 arasý sayýsal karakter zorunluluðunu kaldýrýyoruz.
+//}).AddPasswordValidator<CustomPasswordValidation>().AddEntityFrameworkStores<AppDbContext>().AddEntityFrameworkStores<AppDbContext>();;
+//services.AddMvc();
+
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = false;    //Numeric karakterlere izin verilmedi.
@@ -27,6 +37,8 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireLowercase = true; //küçük harf zorunluluðu var.
     options.Password.RequireUppercase = false;//büyük harf zorunluluðu yok.
     options.Password.RequireNonAlphanumeric = false; //alphanumericolamayan karakter zorunlulugu yoktur.
+
+    options.User.RequireUniqueEmail = true; //Email Adresi Artýk tekil bir deðerdir.
 
     //özel validasyonlarý IPasswordValidator arayuzunu kullanmamýz gerekecektir.   
 
