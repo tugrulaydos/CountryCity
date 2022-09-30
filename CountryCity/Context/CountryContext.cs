@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CountryCity.Context
 {
-    public class CountryContext:IdentityDbContext<AppUser,AppRole,string>  
+    public class CountryContext:IdentityDbContext<AppUser,AppRole,int>  
     {
         // User modelinde "AppUser" sınıfının, role modelinde ise "AppRole" sınıfının kullanılacağını
         //belirtmiş oluyoruz. 3.Parametrede ise bu yapılanmanın primary key(ID) kololarının

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CountryCity.Models
 {
-    public class AppUser:IdentityUser 
+    public class AppUser:IdentityUser<int>
     {
 
         //Identity mekanizmasında kullanıcıya dair default gelen validasyonlar mevcuttur.
