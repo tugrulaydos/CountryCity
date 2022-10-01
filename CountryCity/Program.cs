@@ -75,6 +75,8 @@ builder.Services.ConfigureApplicationCookie(_ =>
     };
     _.SlidingExpiration = true; //Expiration süresinin yarýsý kadar süre zarfýnda istekte bulunulursa eðer geri kalan yarýsýný tekrar sýfýrlayarak ilk ayarlanan süreyi tazeleyecektir.
     _.ExpireTimeSpan = TimeSpan.FromMinutes(2);//CookieBuilder nesnesinde tanýmlanan Expiration deðerinin varsayýlan deðerlerle ezilme ihtimaline karþýn tekrardan Cookie vadesi burada da belirtiliyor.
+    _.AccessDeniedPath = new PathString("/Authority/Index"); //Yetkisi olmadan sayfaya ulasmaya calisanlari bu sayfaya yonlendiriyoruz.
+
 });
 
 //Bu þekilde kullanýlacak olan Cookie yapýlanmasýnýn temel konfigurasyon ayarlarý saðlanmýþ oluyor.

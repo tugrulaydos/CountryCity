@@ -33,6 +33,11 @@
                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>*@
+                      @*  <a asp-action="Page1" asp-controller="Pages">Page 1</a> |
+                        <a asp-action="Page2" asp-controller="Pages">Page 2</a> |
+                        <a asp-action="Page3" asp-controller="Pages">Page 3</a> |*@
+                       
+                        <br />
 
                         
                         <li class="nav-item">
@@ -59,9 +64,37 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - CountryCity - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">CountryCity</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    @*&copy; 2022 - CountryCity - <a asp-area="" asp-page="/Privacy">Privacy</a>*@
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/Pages/Page1">Page1</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/Pages/Page2">Page2</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/Pages/Page3">Page3</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+
+        
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
