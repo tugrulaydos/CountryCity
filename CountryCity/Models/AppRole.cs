@@ -4,8 +4,9 @@ namespace CountryCity.Models
 {
     public class AppRole:IdentityRole<int>
     {
-        //public DateTime CreationData { get; set; }
+        //Uygulamada bir rol entity'si tanımlayabilmek için ilgili sınıfın "IdentityRole" sınıfından türemesi gerekmektedir.
 
+        public DateTime CreationDate { get; set; }
 
 
     }

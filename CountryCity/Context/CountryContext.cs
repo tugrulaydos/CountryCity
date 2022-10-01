@@ -6,6 +6,8 @@ namespace CountryCity.Context
 {
     public class CountryContext:IdentityDbContext<AppUser,AppRole,int>  
     {
+        //Kullanıcılara rol vermek istiyorsak IdentityDbContext sınıfına yukarıdaki gibi AppRole sınıfını tanımlamalıyız.
+
         // User modelinde "AppUser" sınıfının, role modelinde ise "AppRole" sınıfının kullanılacağını
         //belirtmiş oluyoruz. 3.Parametrede ise bu yapılanmanın primary key(ID) kololarının
         //string tipte degerlerle tutulacağını bildimiş oluyor.
