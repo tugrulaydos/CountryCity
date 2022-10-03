@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
 using NuGet.Configuration;
 
 namespace CountryCity.Controllers
@@ -46,6 +47,7 @@ namespace CountryCity.Controllers
 
         public IActionResult Login(string ReturnUrl)
         {
+            logger.LogDebug("aydos");
             TempData["ReturnUrl"] = ReturnUrl;  //hangi sayfaya girilmek isteniyorsa otamatik olarak Returnrl parametresiyle gelecektir.
             return View();
 
@@ -62,6 +64,7 @@ namespace CountryCity.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            logger.LogDebug("aydos");
             if (ModelState.IsValid)
             {
                 
@@ -93,6 +96,7 @@ namespace CountryCity.Controllers
 
         public async Task<IActionResult> LogOut()
         {
+            logger.LogDebug("aydos");
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index");
         }
