@@ -30,12 +30,16 @@ namespace CountryCity.Controllers
             //durumunda ModelState’e error olarak ilgili hata mesajları
             //eklenmekte ve böylece kullanıcıya bilgi verilmektedir.
 
+        readonly ILogger<HomeController> logger;
 
-        public HomeController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager )
+
+        public HomeController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,ILogger<HomeController> logger)
         {
             _userManager = userManager;
 
             _signInManager = signInManager;
+
+            this.logger = logger;
             
 
         }

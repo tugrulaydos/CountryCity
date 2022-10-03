@@ -15,6 +15,10 @@ builder.Services.AddControllersWithViews();
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+builder.Services.AddLogging();
+
+
+
 
 builder.Services.AddDbContext<CountryContext>(x => x.UseSqlServer("ConnectionStrings:SqlServerConnectionString"));
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<CountryContext>();
