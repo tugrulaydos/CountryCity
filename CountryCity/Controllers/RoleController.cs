@@ -11,14 +11,18 @@ namespace CountryCity.Controllers
 
         readonly UserManager<AppUser> _userManager;
 
-        public RoleController(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager)
+        readonly ILogger<RoleController> _logger;
+
+        public RoleController(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager, ILogger<RoleController> logger)
         {
-            _roleManager = roleManager;
-            _userManager = userManager;
+            this._roleManager = roleManager;
+            this._userManager = userManager;
+            this._logger = logger;
         }
 
         public async Task<IActionResult> CreateRole()
         {
+            _logger.LogDebug("aydos");
             //if (id != null)
             //{
             //    AppRole role = await _roleManager.FindByIdAsync(id);
@@ -35,6 +39,7 @@ namespace CountryCity.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRole(RoleViewModel model)
         {
+            _logger.LogDebug("aydos");
             IdentityResult result = null;
 
             //if (id != null)
@@ -53,7 +58,7 @@ namespace CountryCity.Controllers
 
             if (result.Succeeded)
             {
-                //Succeed
+                return RedirectToAction("Index", "Role");
             }
 
 
@@ -64,6 +69,7 @@ namespace CountryCity.Controllers
         //Rolleri Silme
         public async Task<IActionResult> DeleteRole(string id)
         {
+            _logger.LogDebug("aydos");
             AppRole role = await _roleManager.FindByIdAsync(id);
             IdentityResult result = await _roleManager.DeleteAsync(role); //Role Silmek için delete metodu.
 
@@ -78,7 +84,8 @@ namespace CountryCity.Controllers
         //Rolleri Listeleme.
         public IActionResult Index()
         {
-            
+            _logger.LogDebug("aydos");
+
             return View(_roleManager.Roles.ToList());
         }
 
@@ -86,6 +93,8 @@ namespace CountryCity.Controllers
         //Kullanıcılara Rol Atamak
         public async Task<IActionResult> RoleAssign(string id)
         {
+            _logger.LogDebug("aydos");
+
             AppUser user = await _userManager.FindByIdAsync(id); //ID'si eşleşen kullanıcıyı getir.
 
             List<AppRole> allRoles = _roleManager.Roles.ToList(); //Tüm rollleri Listeliyoruz. ve ardıdnan
@@ -95,9 +104,9 @@ namespace CountryCity.Controllers
 
             List<RoleAssignViewModel> assignRoles = new List<RoleAssignViewModel>();
 
-            allRoles.ForEach(role => assignRoles.Add(new RoleAssignViewModel  
+            allRoles.ForEach(role => assignRoles.Add(new RoleAssignViewModel
             {
-                HasAssign = userRoles.Contains(role.Name), 
+                HasAssign = userRoles.Contains(role.Name),
                 RoleId = role.Id,
                 RoleName = role.Name
             }));
@@ -108,6 +117,8 @@ namespace CountryCity.Controllers
         [HttpPost]
         public async Task<IActionResult> RoleAssign(List<RoleAssignViewModel> modelList, string id)
         {
+            _logger.LogDebug("aydos");
+
             AppUser user = await _userManager.FindByIdAsync(id);
             foreach (RoleAssignViewModel role in modelList)
             {
@@ -115,30 +126,32 @@ namespace CountryCity.Controllers
                     await _userManager.AddToRoleAsync(user, role.RoleName);   //AddToRole metodu ile kullanıcıya Role atanıyor.
                 else
                     await _userManager.RemoveFromRoleAsync(user, role.RoleName);
-            }           
+            }
 
-            
+
             return RedirectToAction("Index", "Home");
 
         }
 
         public async Task<IActionResult> RoleUpdate(string id)
         {
-            
-               AppRole role = await _roleManager.FindByIdAsync(id);
+            _logger.LogDebug("aydos");
 
-               RoleViewModel rwm = new RoleViewModel
-               {                    
-                   Name = role.Name
-               };
+            AppRole role = await _roleManager.FindByIdAsync(id);
 
-               return View(rwm);
-            
+            RoleViewModel rwm = new RoleViewModel
+            {
+                Name = role.Name
+            };
+
+            return View(rwm);
+
         }
 
         [HttpPost]
-        public async Task<IActionResult> RoleUpdate(RoleViewModel rwm,string id)
+        public async Task<IActionResult> RoleUpdate(RoleViewModel rwm, string id)
         {
+            _logger.LogDebug("aydos");
             AppRole role = await _roleManager.FindByIdAsync(id);
             role.Name = rwm.Name;
             await _roleManager.UpdateAsync(role);  //Rol guncellemek için kullanıyoruz.

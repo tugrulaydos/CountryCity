@@ -17,6 +17,8 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddLogging();
 
+builder.Logging.AddLog4Net();
+
 
 
 
