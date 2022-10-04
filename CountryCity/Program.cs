@@ -17,7 +17,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddLogging();
 
-builder.Services.AddMemoryCache();
+
 
 
 
@@ -27,11 +27,11 @@ builder.Services.AddMvcCore();
 
 //builder.Services.AddIdentity<AppUser, AppRole>(_ =>
 //{
-//    _.Password.RequiredLength = 5; //En az kaç karakterli olması gerektiğini belirtiyoruz.
-//    _.Password.RequireNonAlphanumeric = false; //Alfanumerik zorunluluğunu kaldırıyoruz.
-//    _.Password.RequireLowercase = false; //Küçük harf zorunluluğunu kaldırıyoruz.
-//    _.Password.RequireUppercase = false; //Büyük harf zorunluluğunu kaldırıyoruz.
-//    _.Password.RequireDigit = false; //0-9 arası sayısal karakter zorunluluğunu kaldırıyoruz.
+//    _.Password.RequiredLength = 5; //En az kaÃ§ karakterli olmasÄ± gerektiÄŸini belirtiyoruz.
+//    _.Password.RequireNonAlphanumeric = false; //Alfanumerik zorunluluÄŸunu kaldÄ±rÄ±yoruz.
+//    _.Password.RequireLowercase = false; //KÃ¼Ã§Ã¼k harf zorunluluÄŸunu kaldÄ±rÄ±yoruz.
+//    _.Password.RequireUppercase = false; //BÃ¼yÃ¼k harf zorunluluÄŸunu kaldÄ±rÄ±yoruz.
+//    _.Password.RequireDigit = false; //0-9 arasÄ± sayÄ±sal karakter zorunluluÄŸunu kaldÄ±rÄ±yoruz.
 //}).AddPasswordValidator<CustomPasswordValidation>().AddEntityFrameworkStores<AppDbContext>().AddEntityFrameworkStores<AppDbContext>();;
 //services.AddMvc();
 
@@ -39,13 +39,13 @@ builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = false;    //Numeric karakterlere izin verilmedi.
     options.Password.RequiredLength = 5;      //En az 5 karakterli olacak.
-    options.Password.RequireLowercase = true; //küçük harf zorunluluğu var.
-    options.Password.RequireUppercase = false;//büyük harf zorunluluğu yok.
+    options.Password.RequireLowercase = true; //kÃ¼Ã§Ã¼k harf zorunluluÄŸu var.
+    options.Password.RequireUppercase = false;//bÃ¼yÃ¼k harf zorunluluÄŸu yok.
     options.Password.RequireNonAlphanumeric = false; //alphanumericolamayan karakter zorunlulugu yoktur.
 
-    options.User.RequireUniqueEmail = true; //Email Adresi Artık tekil bir değerdir.
+    options.User.RequireUniqueEmail = true; //Email Adresi ArtÄ±k tekil bir deÄŸerdir.
 
-    //özel validasyonları IPasswordValidator arayuzunu kullanmamız gerekecektir.   
+    //Ã¶zel validasyonlarÄ± IPasswordValidator arayuzunu kullanmamÄ±z gerekecektir.   
 
 });
 
@@ -54,37 +54,37 @@ builder.Services.ConfigureApplicationCookie(_ =>
     _.LoginPath = new PathString("/Home/Login");
     _.Cookie = new CookieBuilder
     {
-        Name = "AspNetCoreIdentityExampleCookie", //Oluşturulacak Cookie'yi isimlendiriyoruz.
-        HttpOnly = false, //Kötü niyetli insanların client-side tarafından Cookie'ye erişmesini engelliyoruz.
-        /*  Expiration = TimeSpan.FromMinutes(120),*/  //Oluşturulacak Cookie'nin vadesini belirliyoruz.
+        Name = "AspNetCoreIdentityExampleCookie", //OluÅŸturulacak Cookie'yi isimlendiriyoruz.
+        HttpOnly = false, //KÃ¶tÃ¼ niyetli insanlarÄ±n client-side tarafÄ±ndan Cookie'ye eriÅŸmesini engelliyoruz.
+        /*  Expiration = TimeSpan.FromMinutes(120),*/  //OluÅŸturulacak Cookie'nin vadesini belirliyoruz.
         MaxAge = TimeSpan.FromMinutes(120),
 
-        SameSite = SameSiteMode.Lax, //Top level navigasyonlara sebep olmayan requestlere Cookie'nin gönderilmemesini belirtiyoruz.
-        //Uygulamamıza ait Cookie bilgilerinin 3. taraflardan kaynaklanan isteklere gönderilip gönderilmemesi
-        //ayarını yaptığımız bir özelliktir. "None","Strict" ve "Lax" o.ü. üç farklı değer alır.
+        SameSite = SameSiteMode.Lax, //Top level navigasyonlara sebep olmayan requestlere Cookie'nin gÃ¶nderilmemesini belirtiyoruz.
+        //UygulamamÄ±za ait Cookie bilgilerinin 3. taraflardan kaynaklanan isteklere gÃ¶nderilip gÃ¶nderilmemesi
+        //ayarÄ±nÄ± yaptÄ±ÄŸÄ±mÄ±z bir Ã¶zelliktir. "None","Strict" ve "Lax" o.Ã¼. Ã¼Ã§ farklÄ± deÄŸer alÄ±r.
 
-        //None->Cookie bilgilerini 3.taraf isteğe ekler ve gönderiri.
-        //Strict--> Uygulamaya ait Cookie bilgilerini 3.taraf hiçbir isteğe göndermez.
-        //Lax--> Uygulamaya ait Cookie bilgilerini üst düzey(top-level) navigasyonlara
-        //sebep olmayan yani bir başka deyişle adres çubuğundaki değişikliklere neden olmayan isteklere
-        //göndermeyecektir.
+        //None->Cookie bilgilerini 3.taraf isteÄŸe ekler ve gÃ¶nderiri.
+        //Strict--> Uygulamaya ait Cookie bilgilerini 3.taraf hiÃ§bir isteÄŸe gÃ¶ndermez.
+        //Lax--> Uygulamaya ait Cookie bilgilerini Ã¼st dÃ¼zey(top-level) navigasyonlara
+        //sebep olmayan yani bir baÅŸka deyiÅŸle adres Ã§ubuÄŸundaki deÄŸiÅŸikliklere neden olmayan isteklere
+        //gÃ¶ndermeyecektir.
 
-        SecurePolicy = CookieSecurePolicy.Always //HTTPS üzerinden erişilebilir yapıyoruz.
-        //SecurePolicy, uygulamamıza ait Cokie bilgilerinin güvenilir(HTTPS) ya da güvensiz(HTTP)
-        //üzerinden erişilebilir olup olmamasını ayarladığımız özelliktir.
-        //Always--> Cookie'leri HTTPS üzerinden erişebilir yapar.
-        //SameAsRequest-->Cookie'leri hem HTTP hemde HTTPS protokolu üzerinden erişilebilir
+        SecurePolicy = CookieSecurePolicy.Always //HTTPS Ã¼zerinden eriÅŸilebilir yapÄ±yoruz.
+        //SecurePolicy, uygulamamÄ±za ait Cokie bilgilerinin gÃ¼venilir(HTTPS) ya da gÃ¼vensiz(HTTP)
+        //Ã¼zerinden eriÅŸilebilir olup olmamasÄ±nÄ± ayarladÄ±ÄŸÄ±mÄ±z Ã¶zelliktir.
+        //Always--> Cookie'leri HTTPS Ã¼zerinden eriÅŸebilir yapar.
+        //SameAsRequest-->Cookie'leri hem HTTP hemde HTTPS protokolu Ã¼zerinden eriÅŸilebilir
         //yapar.
-        //NONE--> Cookie'leri HTTP üzerinden erişilebilir yapar.
+        //NONE--> Cookie'leri HTTP Ã¼zerinden eriÅŸilebilir yapar.
 
     };
-    _.SlidingExpiration = true; //Expiration süresinin yarısı kadar süre zarfında istekte bulunulursa eğer geri kalan yarısını tekrar sıfırlayarak ilk ayarlanan süreyi tazeleyecektir.
-    _.ExpireTimeSpan = TimeSpan.FromMinutes(2);//CookieBuilder nesnesinde tanımlanan Expiration değerinin varsayılan değerlerle ezilme ihtimaline karşın tekrardan Cookie vadesi burada da belirtiliyor.
+    _.SlidingExpiration = true; //Expiration sÃ¼resinin yarÄ±sÄ± kadar sÃ¼re zarfÄ±nda istekte bulunulursa eÄŸer geri kalan yarÄ±sÄ±nÄ± tekrar sÄ±fÄ±rlayarak ilk ayarlanan sÃ¼reyi tazeleyecektir.
+    _.ExpireTimeSpan = TimeSpan.FromMinutes(2);//CookieBuilder nesnesinde tanÄ±mlanan Expiration deÄŸerinin varsayÄ±lan deÄŸerlerle ezilme ihtimaline karÅŸÄ±n tekrardan Cookie vadesi burada da belirtiliyor.
     _.AccessDeniedPath = new PathString("/Authority/Index"); //Yetkisi olmadan sayfaya ulasmaya calisanlari bu sayfaya yonlendiriyoruz.
 
 });
 
-//Bu şekilde kullanılacak olan Cookie yapılanmasının temel konfigurasyon ayarları sağlanmış oluyor.
+//Bu ÅŸekilde kullanÄ±lacak olan Cookie yapÄ±lanmasÄ±nÄ±n temel konfigurasyon ayarlarÄ± saÄŸlanmÄ±ÅŸ oluyor.
 
 
 var app = builder.Build();
