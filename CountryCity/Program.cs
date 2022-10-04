@@ -17,6 +17,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddLogging();
 
+builder.Services.AddMemoryCache();
 
 
 

@@ -1,16 +1,59 @@
-﻿
+﻿@using CountryCity.Models;
+@model List<Country>
+
 @{
-    Layout = null;
+	Layout = null;
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Page1</title>
+	<meta name="viewport" content="width=device-width" />
+	<title>Page1</title>
 </head>
 <body>
-    <h2>This is Page1</h2>
+	<h2>This is Page1</h2>
+
+	<table class="table">
+		<thead>
+			<tr>
+
+				<th>
+					Country
+				</th>
+				<th>
+					Capital
+
+				</th>
+				<th>
+					Population
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model != null)
+			{
+				@foreach (var item in Model)
+				{
+					<tr>
+
+						<td>
+							@item.Name
+						</td>
+						<td>
+							@item.Capital
+						</td>
+						<td>
+							@item.Population
+						</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+
+
 </body>
 </html>

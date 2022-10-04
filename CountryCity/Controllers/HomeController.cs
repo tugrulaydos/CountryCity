@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Caching.Memory;
 using NuGet.Configuration;
 
 namespace CountryCity.Controllers
@@ -32,20 +34,24 @@ namespace CountryCity.Controllers
 
         readonly ILogger<HomeController> logger;
 
+        IMemoryCache _memoryCache;
 
-        public HomeController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,ILogger<HomeController> logger)
+
+        public HomeController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,ILogger<HomeController> logger,IMemoryCache memoryCache)
         {
             _userManager = userManager;
 
             _signInManager = signInManager;
 
             this.logger = logger;
+            this._memoryCache = memoryCache; 
             
 
         }
 
         public IActionResult Login(string ReturnUrl)
         {
+            
             TempData["ReturnUrl"] = ReturnUrl;  //hangi sayfaya girilmek isteniyorsa otamatik olarak Returnrl parametresiyle gelecektir.
             return View();
 
