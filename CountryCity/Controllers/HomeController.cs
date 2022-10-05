@@ -1,10 +1,12 @@
 ﻿using CountryCity.Models;
 using CountryCity.Models.ViewModel;
 using CountryCity.ViewModel;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using NuGet.Configuration;
 
@@ -35,15 +37,19 @@ namespace CountryCity.Controllers
 
         IMemoryCache _memoryCache;
 
+       
+
 
         public HomeController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,ILogger<HomeController> logger,IMemoryCache memoryCache)
         {
-            _userManager = userManager;
+            this._userManager = userManager;
 
-            _signInManager = signInManager;
+            this._signInManager = signInManager;
 
             this.logger = logger;
-            this._memoryCache = memoryCache; 
+
+            this._memoryCache = memoryCache;
+            
             
 
         }
@@ -161,6 +167,9 @@ namespace CountryCity.Controllers
         //Cookie bazlı kimlik doğrulamasını tam olarak inşa ettikten sonra sayfa bazlı yetki kontrolu gerceklestirmemiz yeterli ve yerinde olacaktır.
         //Bunun için Authorize attributeunun kullanılması yeterlidir.Burada örneklendirme için 
         //“Index” actionını seçiyorum ve aşağıda olduğu gibi Authorize attribute ile işaretliyorum.
+
+       
+
 
 
 

@@ -4,6 +4,7 @@ using CountryCity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 using System;
 using System.Configuration;
 
@@ -18,6 +19,18 @@ builder.Services.AddRazorPages();
 builder.Services.AddLogging();
 
 builder.Services.AddMemoryCache();
+
+builder.Services.AddStackExchangeRedisCache(redis =>
+{
+    redis.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
+builder.Services.AddSingleton<RedisService, RedisService>();//dependencyinjection provider'ına singleton olarak tek bir nesne olarak ekleyip 
+                                                            //tekbir nesne olarak yönetebilirz.
+
+
+
+
 
 
 
