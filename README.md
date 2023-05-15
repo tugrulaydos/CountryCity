@@ -4,10 +4,8 @@
 int this project you can see login logout transactions and Redis-cache and In-Memory Cache actions 
 
 # Tools and Technologies
--In this project following tools and technologies have been used.
+- In this project following tools and technologies have been used.
 Visual Studio
-
-
 
 
 
