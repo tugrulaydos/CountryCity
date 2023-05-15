@@ -5,7 +5,13 @@ int this project you can see login logout transactions and Redis-cache and In-Me
 
 ## Tools and Technologies
 - In this project following tools and technologies have been used.
-  Visual Studio, Sql Server, EntityFramework Core, Code First, Microsoft Identity, Redis, In-Memory-Cache, Html, Css, JavaScript
+   - Visual Studio,
+   - Sql Server, EntityFramework Core,
+   - Code First,
+   - Microsoft Identity,
+   - Redis,
+   - In-Memory-Cache
+   - Html, Css, JavaScript
 
 
 
