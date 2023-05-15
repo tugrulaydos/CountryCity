@@ -1,11 +1,11 @@
-# CountryCity Smal lProject
+# CountryCity Project
 
-# Brief Description
+## Brief Description
 int this project you can see login logout transactions and Redis-cache and In-Memory Cache actions 
 
-# Tools and Technologies
+## Tools and Technologies
 - In this project following tools and technologies have been used.
-Visual Studio
+Visual Studio, Sql Server, EntityFramework Core, Code First, Microsoft Identity, Redis, In-Memory-Cache, Html, Css, JavaScript
 
 
 
